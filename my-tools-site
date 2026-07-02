@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>東的工具網站</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Microsoft JhengHei", sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+      text-align: center;
+    }
+
+    .box {
+      background: white;
+      padding: 50px 35px;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      max-width: 520px;
+      margin: 20px;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 32px;
+    }
+
+    p {
+      color: #6b7280;
+      line-height: 1.8;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 14px;
+      background: #e0ecff;
+      color: #1d4ed8;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="box">
+    <h1>東的工具網站</h1>
+    <p>
+      這裡將整理個人開發的程式、下載連結、使用說明與版本更新。
+    </p>
+    <div class="status">網站建置中</div>
+  </main>
+</body>
+</html>
