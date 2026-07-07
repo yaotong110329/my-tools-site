@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Console Snippets — kumozoe tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style>
+  :root{
+    --bg-deep:#0a0e14;
+    --bg-panel:#0f1520;
+    --bg-panel-hover:#121a27;
+    --border-glass:rgba(94,234,212,0.14);
+    --border-glass-strong:rgba(94,234,212,0.32);
+    --accent:#5eead4;
+    --accent-dim:#2dd4bf;
+    --accent-glow:rgba(94,234,212,0.25);
+    --text-primary:#e6edf3;
+    --text-muted:#8b98a5;
+    --text-faint:#5a6472;
+    --amber:#f5c26b;
+    --rose:#f28b8b;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(94,234,212,0.06), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(94,234,212,0.04), transparent 55%),
+      var(--bg-deep);
+    color:var(--text-primary);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    background:rgba(10,14,20,0.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border-glass);
+    padding:16px 24px;
+    display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+  }
+  .brand{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700; font-size:18px; letter-spacing:-0.02em;
+    display:flex; align-items:center; gap:8px;
+    white-space:nowrap;
+  }
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent-glow);}
+  .brand .path{color:var(--text-muted); font-family:'JetBrains Mono',monospace; font-weight:400; font-size:14px;}
+
+  .searchwrap{flex:1; min-width:220px; max-width:520px; position:relative;}
+  .searchwrap::before{
+    content:'>'; position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    color:var(--accent); font-family:'JetBrains Mono',monospace; font-weight:600; pointer-events:none;
+  }
+  #search{
+    width:100%; padding:10px 14px 10px 32px;
+    background:var(--bg-panel); border:1px solid var(--border-glass);
+    border-radius:8px; color:var(--text-primary);
+    font-family:'JetBrains Mono',monospace; font-size:14px;
+    outline:none; transition:border-color .15s, box-shadow .15s;
+  }
+  #search::placeholder{color:var(--text-faint);}
+  #search:focus{border-color:var(--border-glass-strong); box-shadow:0 0 0 3px var(--accent-glow);}
+
+  .count-badge{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-muted);
+    padding:6px 10px; border:1px solid var(--border-glass); border-radius:6px; white-space:nowrap;
+  }
+
+  /* ---------- Layout ---------- */
+  .layout{display:flex; max-width:1280px; margin:0 auto;}
+  .sidebar{
+    width:200px; flex-shrink:0; padding:24px 16px;
+    position:sticky; top:65px; align-self:flex-start;
+    display:flex; flex-direction:column; gap:4px;
+  }
+  .sidebar .label{
+    font-family:'Space Grotesk',sans-serif; font-size:11px; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--text-faint); margin:0 0 8px 10px;
+  }
+  .cat-btn{
+    display:flex; justify-content:space-between; align-items:center;
+    background:none; border:none; color:var(--text-muted);
+    font-family:'Inter',sans-serif; font-size:14px; text-align:left;
+    padding:8px 10px; border-radius:6px; cursor:pointer;
+    transition:background .12s, color .12s;
+  }
+  .cat-btn:hover{background:var(--bg-panel); color:var(--text-primary);}
+  .cat-btn.active{background:rgba(94,234,212,0.08); color:var(--accent);}
+  .cat-btn span.n{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint);}
+  .cat-btn.active span.n{color:var(--accent-dim);}
+
+  main{flex:1; padding:24px 24px 80px; min-width:0;}
+  .empty{
+    display:none; text-align:center; padding:80px 20px; color:var(--text-faint);
+    font-family:'JetBrains Mono',monospace;
+  }
+
+  /* ---------- Snippet card (terminal window signature) ---------- */
+  .grid{display:grid; grid-template-columns:1fr; gap:20px;}
+  @media(min-width:900px){ .grid{grid-template-columns:1fr 1fr;} }
+
+  .card{
+    background:var(--bg-panel);
+    border:1px solid var(--border-glass);
+    border-radius:10px;
+    overflow:hidden;
+    transition:border-color .15s, transform .15s, box-shadow .15s;
+    display:flex; flex-direction:column;
+  }
+  .card:hover{border-color:var(--border-glass-strong); box-shadow:0 8px 30px -12px rgba(94,234,212,0.15);}
+
+  .card-chrome{
+    display:flex; align-items:center; gap:10px;
+    padding:10px 14px; background:rgba(255,255,255,0.02);
+    border-bottom:1px solid var(--border-glass);
+  }
+  .dots{display:flex; gap:6px;}
+  .dots i{width:9px;height:9px;border-radius:50%; display:block;}
+  .dots i:nth-child(1){background:#f28b8b55; border:1px solid #f28b8b88;}
+  .dots i:nth-child(2){background:#f5c26b55; border:1px solid #f5c26b88;}
+  .dots i:nth-child(3){background:#5eead455; border:1px solid #5eead488;}
+  .card-title{
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;
+    color:var(--text-primary); flex:1; min-width:0;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .tag{
+    font-family:'JetBrains Mono',monospace; font-size:10px; padding:3px 8px;
+    border-radius:20px; border:1px solid var(--border-glass); color:var(--accent-dim);
+    white-space:nowrap;
+  }
+
+  .card-desc{
+    padding:12px 14px 0; font-size:13px; color:var(--text-muted); line-height:1.5;
+  }
+
+  .code-wrap{position:relative; margin:12px 14px 14px;}
+  .code-wrap pre{
+    margin:0; padding:14px; border-radius:8px;
+    background:#0d1117 !important; border:1px solid rgba(255,255,255,0.05);
+    font-family:'JetBrains Mono',monospace !important; font-size:12.5px !important;
+    line-height:1.6 !important; max-height:280px; overflow:auto;
+  }
+  .code-wrap code{font-family:'JetBrains Mono',monospace !important; background:transparent !important;}
+
+  .copy-btn{
+    position:absolute; top:8px; right:8px;
+    background:rgba(10,14,20,0.9); border:1px solid var(--border-glass);
+    color:var(--text-muted); font-family:'JetBrains Mono',monospace; font-size:11px;
+    padding:5px 10px; border-radius:6px; cursor:pointer;
+    transition:all .12s;
+  }
+  .copy-btn:hover{border-color:var(--border-glass-strong); color:var(--accent);}
+  .copy-btn.copied{color:var(--accent); border-color:var(--border-glass-strong);}
+
+  footer{
+    text-align:center; padding:30px 20px 50px;
+    color:var(--text-faint); font-family:'JetBrains Mono',monospace; font-size:12px;
+  }
+  footer a{color:var(--accent-dim); text-decoration:none;}
+
+  @media(max-width:720px){
+    .sidebar{display:none;}
+    .layout{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="dot"></span>console.snippets <span class="path">/ tools.kumozoe.com</span></div>
+  <div class="searchwrap"><input id="search" type="text" placeholder="搜尋標題、說明或程式碼..."></div>
+  <div class="count-badge" id="countBadge">0 個片段</div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="label">分類</div>
+    <div id="catList"></div>
+  </aside>
+
+  <main>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="emptyState">// 找不到符合的片段</div>
+  </main>
+</div>
+
+<footer>手動整理的 Chrome DevTools Console 常用片段 · <a href="https://tools.kumozoe.com">tools.kumozoe.com</a></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+<script>
+/* =========================================================
+   資料區：所有片段都放在這個陣列。
+   要新增片段，直接在陣列裡加一個物件即可，格式如下：
+   {
+     id: 唯一英文/數字代號,
+     title: 標題,
+     category: 分類（會自動出現在左側選單）,
+     desc: 一句話說明用途,
+     lang: 'javascript',
+     code: `貼上你的程式碼`
+   }
+   ========================================================= */
+const SNIPPETS = [
+  {
+    id:"copy-all-links",
+    title:"複製頁面所有連結",
+    category:"擷取資料",
+    desc:"抓出目前頁面所有 <a> 連結的網址，並複製到剪貼簿，一行一個。",
+    lang:"javascript",
+    code:`const links = [...document.querySelectorAll('a')]
+  .map(a => a.href)
+  .filter(Boolean);
+copy(links.join('\\n'));
+console.log(\`已複製 \${links.length} 個連結\`);`
+  },
+  {
+    id:"extract-table",
+    title:"表格轉 CSV 並下載",
+    category:"擷取資料",
+    desc:"把頁面上第一個 <table> 轉成 CSV 檔並觸發下載，適合政府網站的查詢結果表格。",
+    lang:"javascript",
+    code:`const table = document.querySelector('table');
+const rows = [...table.querySelectorAll('tr')].map(tr =>
+  [...tr.querySelectorAll('th,td')]
+    .map(td => '"' + td.innerText.replace(/"/g,'""') + '"')
+    .join(',')
+);
+const blob = new Blob([rows.join('\\n')], {type:'text/csv;charset=utf-8;'});
+const a = document.createElement('a');
+a.href = URL.createObjectURL(blob);
+a.download = 'table.csv';
+a.click();`
+  },
+  {
+    id:"auto-scroll",
+    title:"自動捲動到底部（含延遲）",
+    category:"頁面操作",
+    desc:"用於無限捲動頁面，每隔一段時間往下捲，直到頁面高度不再變化才停止。",
+    lang:"javascript",
+    code:`(async () => {
+  let lastHeight = 0;
+  while (true) {
+    window.scrollTo(0, document.body.scrollHeight);
+    await new Promise(r => setTimeout(r, 800));
+    if (document.body.scrollHeight === lastHeight) break;
+    lastHeight = document.body.scrollHeight;
+  }
+  console.log('捲動完成');
+})();`
+  },
+  {
+    id:"highlight-text",
+    title:"高亮頁面上符合關鍵字的文字",
+    category:"頁面操作",
+    desc:"在頁面中搜尋指定關鍵字並用黃色標記，方便肉眼快速找到內容。",
+    lang:"javascript",
+    code:`function highlightText(keyword) {
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node => {
+    if (node.textContent.includes(keyword)) {
+      const span = document.createElement('span');
+      span.innerHTML = node.textContent.replaceAll(
+        keyword,
+        \`<mark style="background:#5eead4;color:#000">\${keyword}</mark>\`
+      );
+      node.replaceWith(span);
+    }
+  });
+}
+highlightText('關鍵字');`
+  },
+  {
+    id:"list-cookies",
+    title:"列出所有 Cookie（表格形式）",
+    category:"偵錯工具",
+    desc:"以 console.table 整齊列出目前網域下的所有 cookie。",
+    lang:"javascript",
+    code:`console.table(
+  document.cookie.split('; ').map(c => {
+    const [name, ...rest] = c.split('=');
+    return { name, value: rest.join('=') };
+  })
+);`
+  },
+  {
+    id:"monitor-fetch",
+    title:"監聽所有 fetch / XHR 請求",
+    category:"偵錯工具",
+    desc:"攔截並印出頁面上所有 fetch 請求的網址與回應，方便反查 API。",
+    lang:"javascript",
+    code:`const originalFetch = window.fetch;
+window.fetch = async (...args) => {
+  const res = await originalFetch(...args);
+  console.log('%c[fetch]', 'color:#5eead4', args[0]);
+  res.clone().json().then(d => console.log(d)).catch(()=>{});
+  return res;
+};
+console.log('fetch 監聽已啟動');`
+  },
+  {
+    id:"form-fields-dump",
+    title:"列出表單所有欄位 name/value",
+    category:"擷取資料",
+    desc:"快速檢查一個表單目前所有欄位的 name 與 value，方便寫自動化腳本前先確認結構。",
+    lang:"javascript",
+    code:`const form = document.querySelector('form');
+console.table(
+  [...form.elements]
+    .filter(el => el.name)
+    .map(el => ({ name: el.name, type: el.type, value: el.value }))
+);`
+  },
+];
+
+/* ========================= 渲染邏輯（不需要修改） ========================= */
+let activeCategory = '全部';
+let searchTerm = '';
+
+function getCategories() {
+  const map = {};
+  SNIPPETS.forEach(s => { map[s.category] = (map[s.category]||0) + 1; });
+  return map;
+}
+
+function renderSidebar() {
+  const cats = getCategories();
+  const total = SNIPPETS.length;
+  let html = `<button class="cat-btn ${activeCategory==='全部'?'active':''}" data-cat="全部">
+      <span>全部</span><span class="n">${total}</span></button>`;
+  Object.entries(cats).forEach(([cat,n]) => {
+    html += `<button class="cat-btn ${activeCategory===cat?'active':''}" data-cat="${cat}">
+      <span>${cat}</span><span class="n">${n}</span></button>`;
+  });
+  document.getElementById('catList').innerHTML = html;
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeCategory = btn.dataset.cat;
+      renderSidebar();
+      renderGrid();
+    });
+  });
+}
+
+function escapeHtml(str){
+  return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+function renderGrid() {
+  const filtered = SNIPPETS.filter(s => {
+    const matchCat = activeCategory === '全部' || s.category === activeCategory;
+    const hay = (s.title + s.desc + s.code).toLowerCase();
+    const matchSearch = hay.includes(searchTerm.toLowerCase());
+    return matchCat && matchSearch;
+  });
+
+  document.getElementById('countBadge').textContent = `${filtered.length} 個片段`;
+  document.getElementById('emptyState').style.display = filtered.length ? 'none' : 'block';
+
+  document.getElementById('grid').innerHTML = filtered.map(s => `
+    <div class="card">
+      <div class="card-chrome">
+        <div class="dots"><i></i><i></i><i></i></div>
+        <div class="card-title">${escapeHtml(s.title)}</div>
+        <div class="tag">${escapeHtml(s.category)}</div>
+      </div>
+      <div class="card-desc">${escapeHtml(s.desc)}</div>
+      <div class="code-wrap">
+        <button class="copy-btn" data-id="${s.id}">複製</button>
+        <pre><code class="language-${s.lang}">${escapeHtml(s.code)}</code></pre>
+      </div>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('pre code').forEach(block => hljs.highlightElement(block));
+
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const snippet = SNIPPETS.find(s => s.id === btn.dataset.id);
+      navigator.clipboard.writeText(snippet.code).then(() => {
+        btn.textContent = '已複製 ✓';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = '複製'; btn.classList.remove('copied'); }, 1500);
+      });
+    });
+  });
+}
+
+document.getElementById('search').addEventListener('input', (e) => {
+  searchTerm = e.target.value;
+  renderGrid();
+});
+
+renderSidebar();
+renderGrid();
+</script>
+</body>
+</html>
