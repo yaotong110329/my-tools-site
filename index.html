@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>東的工具網站</title>
+  <title>酷莫</title>
 
   <style>
     body {
@@ -23,13 +23,13 @@
       padding: 50px 35px;
       border-radius: 18px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-      max-width: 520px;
+      max-width: 620px;
       margin: 20px;
     }
 
     h1 {
       margin-top: 0;
-      font-size: 32px;
+      font-size: 34px;
     }
 
     p {
@@ -46,16 +46,91 @@
       border-radius: 20px;
       font-size: 14px;
     }
+
+    .tool-card {
+      margin-top: 30px;
+      padding: 24px;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      background: #f9fafb;
+      text-align: left;
+    }
+
+    .tool-card h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 22px;
+      color: #111827;
+    }
+
+    .tool-card p {
+      margin-bottom: 18px;
+      color: #4b5563;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .btn:hover {
+      opacity: 0.88;
+    }
   </style>
 </head>
 
 <body>
   <main class="box">
-    <h1>東的工具網站</h1>
+    <h1>酷莫</h1>
     <p>
       這裡將整理個人開發的程式、下載連結、使用說明與版本更新。
     </p>
     <div class="status">網站建置中</div>
+
+    <section class="tool-card">
+      <h2>E-Learning Course Assistant</h2>
+      <p>
+        線上學習課程搜尋、條件篩選與選課清單管理工具。
+      </p>
+
+      <div class="btn-group">
+        <a 
+          class="btn btn-primary"
+          href="https://github.com/yaotong110329/e-learning-course-assistant/releases/latest"
+          target="_blank"
+          rel="noopener">
+          下載最新版本
+        </a>
+
+        <a 
+          class="btn btn-secondary"
+          href="https://github.com/yaotong110329/e-learning-course-assistant"
+          target="_blank"
+          rel="noopener">
+          查看 GitHub 專案
+        </a>
+      </div>
+    </section>
   </main>
 </body>
 </html>
