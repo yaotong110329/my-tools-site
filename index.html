@@ -3,801 +3,162 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>酷莫工具站｜程式下載與程式碼書籤</title>
+  <title>酷莫工具站</title>
 
   <style>
-    :root {
-      --bg: #0b1020;
-      --panel: rgba(255, 255, 255, 0.08);
-      --panel-strong: rgba(255, 255, 255, 0.13);
-      --border: rgba(255, 255, 255, 0.14);
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --muted-2: #64748b;
-      --accent: #38bdf8;
-      --accent-2: #22c55e;
-      --danger: #fb7185;
-      --warning: #facc15;
-      --code-bg: #020617;
-      --radius: 18px;
-      --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       margin: 0;
-      font-family: "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 35%),
-        radial-gradient(circle at top right, rgba(34, 197, 94, 0.12), transparent 35%),
-        var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
+      font-family: "Microsoft JhengHei", sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
     }
 
     .container {
-      width: min(1180px, calc(100% - 36px));
+      max-width: 960px;
       margin: 0 auto;
+      padding: 40px 20px;
     }
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(16px);
-      background: rgba(11, 16, 32, 0.78);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav {
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-    }
-
-    .brand-badge {
-      width: 34px;
-      height: 34px;
-      display: grid;
-      place-items: center;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #020617;
-      font-weight: 900;
-      box-shadow: 0 0 22px rgba(56, 189, 248, 0.35);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      font-size: 14px;
-      padding: 9px 12px;
-      border-radius: 999px;
-      transition: 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: var(--text);
-      background: var(--panel);
-    }
-
-    .hero {
-      padding: 72px 0 42px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.25fr 0.75fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .hero-card,
-    .side-card,
-    .section-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-    }
-
-    .hero-card {
-      padding: 38px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #bae6fd;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.22);
-      padding: 7px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      margin-bottom: 18px;
+    header {
+      text-align: center;
+      margin-bottom: 36px;
     }
 
     h1 {
-      font-size: clamp(34px, 5vw, 58px);
-      line-height: 1.05;
-      margin: 0 0 18px;
-      letter-spacing: -0.05em;
+      margin-bottom: 10px;
+      font-size: 36px;
     }
 
-    .hero p {
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.9;
-      max-width: 760px;
-      margin: 0;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 26px;
-    }
-
-    .btn {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 16px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.2s;
-      background: var(--panel);
-      color: var(--text);
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-      background: var(--panel-strong);
-    }
-
-    .btn.primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #020617;
-      border: 0;
-    }
-
-    .btn.small {
-      padding: 9px 12px;
-      font-size: 13px;
-    }
-
-    .side-card {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 18px;
-    }
-
-    .stat-list {
-      display: grid;
-      gap: 12px;
-    }
-
-    .stat {
-      padding: 16px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid var(--border);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 28px;
-      margin-bottom: 4px;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    section {
-      padding: 28px 0;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: 28px;
-      letter-spacing: -0.03em;
-    }
-
-    .section-head p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .tools {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .search {
-      width: min(420px, 100%);
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 12px;
-      padding: 12px 14px;
-      outline: none;
-    }
-
-    .search::placeholder {
-      color: var(--muted-2);
+    .subtitle {
+      color: #6b7280;
+      font-size: 16px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
     }
 
     .card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      transition: 0.2s;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      border: 1px solid #e5e7eb;
     }
 
-    .card:hover {
-      transform: translateY(-2px);
-      background: var(--panel-strong);
+    .card h2 {
+      margin-top: 0;
+      font-size: 22px;
     }
 
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .card h3 {
-      margin: 0;
-      font-size: 19px;
-      letter-spacing: -0.02em;
-    }
-
-    .desc {
-      color: var(--muted);
-      line-height: 1.75;
-      margin: 0;
-      font-size: 14px;
-    }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+    .card p {
+      color: #6b7280;
+      line-height: 1.7;
     }
 
     .tag {
-      color: #dbeafe;
-      background: rgba(59, 130, 246, 0.14);
-      border: 1px solid rgba(59, 130, 246, 0.2);
+      display: inline-block;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 5px 10px;
       border-radius: 999px;
-      padding: 5px 9px;
-      font-size: 12px;
-    }
-
-    .tag.green {
-      color: #bbf7d0;
-      background: rgba(34, 197, 94, 0.12);
-      border-color: rgba(34, 197, 94, 0.22);
-    }
-
-    .tag.yellow {
-      color: #fef9c3;
-      background: rgba(250, 204, 21, 0.11);
-      border-color: rgba(250, 204, 21, 0.22);
-    }
-
-    .meta {
-      color: var(--muted-2);
       font-size: 13px;
-      display: grid;
-      gap: 6px;
-      margin-top: auto;
+      margin-bottom: 12px;
     }
 
-    .actions {
+    .buttons {
       display: flex;
+      gap: 10px;
       flex-wrap: wrap;
-      gap: 9px;
-      margin-top: 4px;
+      margin-top: 20px;
     }
 
-    .code-box {
-      background: var(--code-bg);
-      border: 1px solid rgba(148, 163, 184, 0.22);
-      border-radius: 14px;
-      overflow: hidden;
+    a.button {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
     }
 
-    pre {
-      margin: 0;
-      padding: 14px;
-      overflow: auto;
-      color: #d1fae5;
-      font-family: Consolas, "JetBrains Mono", monospace;
-      font-size: 12.5px;
-      line-height: 1.6;
-      max-height: 180px;
-    }
-
-    .notice {
-      padding: 18px;
-      border-radius: var(--radius);
-      background: rgba(250, 204, 21, 0.09);
-      border: 1px solid rgba(250, 204, 21, 0.22);
-      color: #fef9c3;
-      line-height: 1.8;
-    }
-
-    .empty {
-      color: var(--muted);
-      padding: 26px;
-      border: 1px dashed var(--border);
-      border-radius: var(--radius);
-      text-align: center;
+    a.button.secondary {
+      background: #374151;
     }
 
     footer {
-      padding: 34px 0 48px;
-      color: var(--muted-2);
       text-align: center;
-      font-size: 13px;
-    }
-
-    @media (max-width: 920px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 640px) {
-      .nav {
-        height: auto;
-        padding: 14px 0;
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .hero {
-        padding-top: 38px;
-      }
-
-      .hero-card {
-        padding: 24px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section-head {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .actions .btn {
-        width: auto;
-      }
+      color: #9ca3af;
+      margin-top: 40px;
+      font-size: 14px;
     }
   </style>
 </head>
 
 <body>
-  <header class="topbar">
-    <div class="container nav">
-      <a class="brand" href="#">
-        <span class="brand-badge">酷</span>
-        <span>酷莫工具站</span>
-      </a>
+  <div class="container">
+    <header>
+      <h1>酷莫工具站</h1>
+      <div class="subtitle">GitHub 專案下載與程式碼書籤整理</div>
+    </header>
 
-      <nav class="nav-links">
-        <a href="#projects">專案下載</a>
-        <a href="#snippets">程式碼書籤</a>
-        <a href="#guide">更新方式</a>
-        <a href="console.html">Console 頁</a>
-      </nav>
-    </div>
-  </header>
+    <main class="grid">
+      <section class="card">
+        <span class="tag">專案下載</span>
+        <h2>Photo Sorter</h2>
+        <p>
+          照片快速分類工具，可用數字鍵快速將圖片分到指定資料夾。
+        </p>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-card">
-          <div class="eyebrow">個人工具整理 · GitHub Pages</div>
-          <h1>程式下載、使用說明、Console 程式碼集中管理</h1>
-          <p>
-            這裡整理我自己開發或常用的工具，包括 GitHub 專案、下載連結、版本說明，
-            以及可複製到 Chrome DevTools Console 使用的常用程式碼片段。
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn primary" href="#projects">查看專案下載</a>
-            <a class="btn" href="#snippets">查看程式碼書籤</a>
-            <a class="btn" href="https://github.com/yaotong110329" target="_blank" rel="noopener">我的 GitHub</a>
-          </div>
+        <div class="buttons">
+          <a class="button" href="https://github.com/yaotong110329/photo-sorter/releases" target="_blank">
+            下載
+          </a>
+          <a class="button secondary" href="https://github.com/yaotong110329/photo-sorter" target="_blank">
+            GitHub
+          </a>
         </div>
+      </section>
 
-        <aside class="side-card">
-          <div>
-            <div class="eyebrow">網站狀態</div>
-            <p class="desc">
-              目前採用單頁資料驅動架構。之後新增專案或程式碼，只需要修改 HTML 最下方的資料區。
-            </p>
-          </div>
+      <section class="card">
+        <span class="tag">專案下載</span>
+        <h2>E-Learning Course Assistant</h2>
+        <p>
+          課程清單整理、課程搜尋與學習流程輔助工具。
+        </p>
 
-          <div class="stat-list">
-            <div class="stat">
-              <strong id="projectCount">0</strong>
-              <span>已整理專案</span>
-            </div>
-            <div class="stat">
-              <strong id="snippetCount">0</strong>
-              <span>程式碼片段</span>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <section id="projects">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>專案下載</h2>
-            <p>放 GitHub 專案、Release 下載、使用說明與版本狀態。</p>
-          </div>
-          <input id="projectSearch" class="search" type="search" placeholder="搜尋專案，例如：照片、課程、PDF">
+        <div class="buttons">
+          <a class="button" href="https://github.com/yaotong110329/e-learning-course-assistant/releases" target="_blank">
+            下載
+          </a>
+          <a class="button secondary" href="https://github.com/yaotong110329/e-learning-course-assistant" target="_blank">
+            GitHub
+          </a>
         </div>
+      </section>
 
-        <div id="projectGrid" class="grid"></div>
-      </div>
-    </section>
+      <section class="card">
+        <span class="tag">程式碼書籤</span>
+        <h2>Console 程式碼書籤</h2>
+        <p>
+          放常用的 Console 程式碼、瀏覽器書籤碼與快速複製工具。
+        </p>
 
-    <section id="snippets">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>程式碼書籤</h2>
-            <p>常用 Console 程式碼、Bookmarklet、小工具片段集中放這裡。</p>
-          </div>
-          <input id="snippetSearch" class="search" type="search" placeholder="搜尋片段，例如：表單、自動填入、複製">
+        <div class="buttons">
+          <a class="button" href="console.html">
+            進入程式碼書籤
+          </a>
         </div>
+      </section>
+    </main>
 
-        <div class="notice" style="margin-bottom: 16px;">
-          注意：如果程式碼涉及內部系統網址、欄位名稱、DOM selector、帳號流程，建議不要放在公開 GitHub Pages。
-          公開網站只放通用工具；敏感片段放私人 repo 或本機檔案。
-        </div>
-
-        <div id="snippetGrid" class="grid"></div>
-      </div>
-    </section>
-
-    <section id="guide">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>之後怎麼更新</h2>
-            <p>不要改版面，只改資料。</p>
-          </div>
-        </div>
-
-        <div class="section-card" style="padding: 22px;">
-          <p class="desc">
-            新增專案：到最下面的 <code>PROJECTS</code> 陣列，複製一組資料貼上。<br>
-            新增程式碼：到最下面的 <code>SNIPPETS</code> 陣列，複製一組資料貼上。<br>
-            如果以後資料變很多，再把資料拆成 <code>data/projects.js</code> 跟 <code>data/snippets.js</code>。
-          </p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    手動整理的個人工具網站 · kumozoe tools
-  </footer>
-
-  <script>
-    /*
-      ==========================================================
-      你以後主要改這裡：PROJECTS 專案資料
-      ==========================================================
-    */
-    const PROJECTS = [
-      {
-        name: "E-Learning Course Assistant",
-        description: "線上學習課程搜尋、條件篩選與選課清單管理工具。",
-        version: "v0.1.0",
-        status: "開發中",
-        category: "學習工具",
-        tags: ["Python", "GUI", "課程管理"],
-        downloadUrl: "https://github.com/yaotong110329/e-learning-course-assistant/releases",
-        githubUrl: "https://github.com/yaotong110329/e-learning-course-assistant",
-        note: "適合放下載連結、使用說明、更新紀錄。"
-      },
-      {
-        name: "Photo Sorter",
-        description: "照片快速分類工具，可用數字鍵快速將圖片分到指定資料夾。",
-        version: "v0.1.0",
-        status: "測試中",
-        category: "照片工具",
-        tags: ["Python", "圖片分類", "快捷鍵"],
-        downloadUrl: "https://github.com/yaotong110329/photo-sorter/releases",
-        githubUrl: "https://github.com/yaotong110329/photo-sorter",
-        note: "適合大量相似照片人工快速分類。"
-      },
-      {
-        name: "拾得物收據彙整工具",
-        description: "將拾得物相關收據或文件整理並輸出成 PDF。",
-        version: "v0.1.0",
-        status: "整理中",
-        category: "勤務工具",
-        tags: ["PDF", "文件整理", "GUI"],
-        downloadUrl: "#",
-        githubUrl: "#",
-        note: "如果內容涉及內部格式，公開頁面只放簡介即可。"
-      }
-    ];
-
-    /*
-      ==========================================================
-      你以後主要改這裡：SNIPPETS 程式碼片段
-      ==========================================================
-      type:
-      - "console"：給 Chrome DevTools Console 複製使用
-      - "bookmarklet"：可拖到書籤列
-    */
-    const SNIPPETS = [
-      {
-        name: "頁面標題與網址快速複製",
-        description: "複製目前網頁標題與網址，方便記錄或回報問題。",
-        type: "console",
-        tags: ["瀏覽器", "複製", "通用"],
-        code: `navigator.clipboard.writeText(document.title + "\\n" + location.href);
-console.log("已複製頁面標題與網址");`
-      },
-      {
-        name: "顯示目前頁面所有輸入框",
-        description: "列出頁面上的 input、select、textarea，方便分析表單欄位。",
-        type: "console",
-        tags: ["表單", "分析", "DevTools"],
-        code: `[...document.querySelectorAll("input, select, textarea")].map((el, i) => ({
-  index: i,
-  tag: el.tagName,
-  type: el.type || "",
-  name: el.name || "",
-  id: el.id || "",
-  placeholder: el.placeholder || "",
-  value: el.value || ""
-}));`
-      },
-      {
-        name: "回到頁面最上方",
-        description: "快速滾動到頁面頂部，可做成書籤列按鈕。",
-        type: "bookmarklet",
-        tags: ["書籤", "頁面控制", "通用"],
-        code: `window.scrollTo({ top: 0, behavior: "smooth" });`
-      }
-    ];
-
-    const $ = (selector) => document.querySelector(selector);
-
-    function safeText(value) {
-      return String(value ?? "").replace(/[&<>"']/g, (char) => {
-        return {
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#039;"
-        }[char];
-      });
-    }
-
-    function makeBookmarklet(code) {
-      const minified = code
-        .replace(/\/\*[\s\S]*?\*\//g, "")
-        .replace(/\n+/g, " ")
-        .replace(/\s{2,}/g, " ")
-        .trim();
-
-      return "javascript:(()=>{" + encodeURIComponent(minified) + "})()";
-    }
-
-    function renderProjects(keyword = "") {
-      const grid = $("#projectGrid");
-      const q = keyword.trim().toLowerCase();
-
-      const list = PROJECTS.filter(item => {
-        const text = [
-          item.name,
-          item.description,
-          item.version,
-          item.status,
-          item.category,
-          ...(item.tags || [])
-        ].join(" ").toLowerCase();
-
-        return text.includes(q);
-      });
-
-      if (list.length === 0) {
-        grid.innerHTML = `<div class="empty">找不到符合的專案</div>`;
-        return;
-      }
-
-      grid.innerHTML = list.map(item => `
-        <article class="card">
-          <div class="card-top">
-            <div>
-              <h3>${safeText(item.name)}</h3>
-              <p class="desc">${safeText(item.description)}</p>
-            </div>
-            <span class="tag green">${safeText(item.status)}</span>
-          </div>
-
-          <div class="tag-row">
-            <span class="tag yellow">${safeText(item.category)}</span>
-            ${(item.tags || []).map(tag => `<span class="tag">${safeText(tag)}</span>`).join("")}
-          </div>
-
-          <div class="meta">
-            <span>版本：${safeText(item.version)}</span>
-            <span>${safeText(item.note)}</span>
-          </div>
-
-          <div class="actions">
-            <a class="btn small primary" href="${safeText(item.downloadUrl)}" target="_blank" rel="noopener">下載</a>
-            <a class="btn small" href="${safeText(item.githubUrl)}" target="_blank" rel="noopener">GitHub</a>
-          </div>
-        </article>
-      `).join("");
-    }
-
-    function renderSnippets(keyword = "") {
-      const grid = $("#snippetGrid");
-      const q = keyword.trim().toLowerCase();
-
-      const list = SNIPPETS.filter(item => {
-        const text = [
-          item.name,
-          item.description,
-          item.type,
-          ...(item.tags || [])
-        ].join(" ").toLowerCase();
-
-        return text.includes(q);
-      });
-
-      if (list.length === 0) {
-        grid.innerHTML = `<div class="empty">找不到符合的程式碼片段</div>`;
-        return;
-      }
-
-      grid.innerHTML = list.map((item, index) => {
-        const bookmarklet = makeBookmarklet(item.code);
-
-        return `
-          <article class="card">
-            <div class="card-top">
-              <div>
-                <h3>${safeText(item.name)}</h3>
-                <p class="desc">${safeText(item.description)}</p>
-              </div>
-              <span class="tag green">${safeText(item.type)}</span>
-            </div>
-
-            <div class="tag-row">
-              ${(item.tags || []).map(tag => `<span class="tag">${safeText(tag)}</span>`).join("")}
-            </div>
-
-            <div class="code-box">
-              <pre><code>${safeText(item.code)}</code></pre>
-            </div>
-
-            <div class="actions">
-              <button class="btn small primary" onclick="copySnippet(${index})">複製程式碼</button>
-              ${
-                item.type === "bookmarklet"
-                  ? `<a class="btn small" href="${bookmarklet}" title="拖曳到書籤列">拖到書籤列</a>`
-                  : ""
-              }
-            </div>
-          </article>
-        `;
-      }).join("");
-    }
-
-    async function copySnippet(index) {
-      const item = SNIPPETS[index];
-
-      try {
-        await navigator.clipboard.writeText(item.code);
-        alert("已複製：" + item.name);
-      } catch (error) {
-        alert("複製失敗，請手動選取程式碼複製。");
-      }
-    }
-
-    $("#projectSearch").addEventListener("input", (event) => {
-      renderProjects(event.target.value);
-    });
-
-    $("#snippetSearch").addEventListener("input", (event) => {
-      renderSnippets(event.target.value);
-    });
-
-    $("#projectCount").textContent = PROJECTS.length;
-    $("#snippetCount").textContent = SNIPPETS.length;
-
-    renderProjects();
-    renderSnippets();
-  </script>
+    <footer>
+      © 酷莫工具站
+    </footer>
+  </div>
 </body>
 </html>
