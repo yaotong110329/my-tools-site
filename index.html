@@ -3,181 +3,178 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>酷莫工具站</title>
+  <meta name="description" content="酷莫家｜個人工具、GitHub 專案與程式碼書籤" />
+  <meta name="theme-color" content="#09090b" />
+  <title>酷莫家｜工具與專案</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans TC', 'Microsoft JhengHei', 'sans-serif']
+          },
+          boxShadow: {
+            glow: '0 0 80px rgba(34, 211, 238, 0.10)'
+          }
+        }
+      }
+    };
+  </script>
 
   <style>
     body {
-      margin: 0;
-      font-family: "Microsoft JhengHei", sans-serif;
-      background: #f4f7fb;
-      color: #1f2937;
+      background:
+        radial-gradient(circle at 12% 4%, rgba(6, 182, 212, 0.14), transparent 26rem),
+        radial-gradient(circle at 92% 12%, rgba(139, 92, 246, 0.11), transparent 25rem),
+        #09090b;
     }
 
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 40px 20px;
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, black 5%, transparent 82%);
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 36px;
+    .glass {
+      background: rgba(24, 24, 27, 0.70);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
     }
 
-    h1 {
-      margin-bottom: 10px;
-      font-size: 36px;
+    .card-shine {
+      position: relative;
+      overflow: hidden;
     }
 
-    .subtitle {
-      color: #6b7280;
-      font-size: 16px;
+    .card-shine::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.07), transparent 65%);
+      transform: translateX(-120%);
+      transition: transform 700ms ease;
+      pointer-events: none;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-      border: 1px solid #e5e7eb;
-    }
-
-    .card h2 {
-      margin-top: 0;
-      font-size: 22px;
-    }
-
-    .card p {
-      color: #6b7280;
-      line-height: 1.7;
-    }
-
-    .tag {
-      display: inline-block;
-      background: #e0f2fe;
-      color: #0369a1;
-      padding: 5px 10px;
-      border-radius: 999px;
-      font-size: 13px;
-      margin-bottom: 12px;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-
-    a.button {
-      display: inline-block;
-      padding: 10px 14px;
-      border-radius: 10px;
-      background: #2563eb;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    a.button.secondary {
-      background: #374151;
-    }
-
-    footer {
-      text-align: center;
-      color: #9ca3af;
-      margin-top: 40px;
-      font-size: 14px;
+    .card-shine:hover::before {
+      transform: translateX(120%);
     }
   </style>
 </head>
 
-<body>
-  <div class="container">
-    <header>
-      <h1>酷莫工具站</h1>
-      <div class="subtitle">GitHub 專案下載與程式碼書籤整理</div>
+<body class="min-h-screen text-zinc-100 antialiased selection:bg-cyan-400/30 selection:text-cyan-100">
+  <div class="fixed inset-0 -z-10 grid-bg"></div>
+
+  <main class="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-5 py-8 sm:px-7 sm:py-10 lg:px-8">
+    <!-- 單頁主視覺 -->
+    <header class="flex flex-col gap-7 border-b border-white/5 pb-9 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-400/15 bg-cyan-400/5 px-3 py-1.5 text-xs font-bold tracking-[0.18em] text-cyan-300">
+          <span class="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(103,232,249,0.8)]"></span>
+          PERSONAL TOOLBOX
+        </div>
+
+        <h1 class="text-5xl font-black leading-none tracking-[-0.055em] text-white sm:text-6xl lg:text-7xl">
+          酷莫家<span class="text-cyan-300">.</span>
+        </h1>
+        <p class="mt-4 max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg">
+          個人開發工具、專案下載與常用程式碼，全部集中在這裡。
+        </p>
+      </div>
+
+      <a
+        href="https://github.com/yaotong110329"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex w-fit items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-bold text-zinc-200 transition hover:border-cyan-400/30 hover:bg-cyan-400/10 hover:text-cyan-200"
+      >
+        GitHub 個人頁
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M7 17 17 7M8 7h9v9" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
     </header>
 
-    <main class="grid">
-      <section class="card">
-        <span class="tag">專案下載</span>
-        <h2>Photo Sorter</h2>
-        <p>
-          照片快速分類工具，可用數字鍵快速將圖片分到指定資料夾。
-        </p>
+    <!-- 所有入口集中在同一區塊，不設導覽分頁 -->
+    <section class="grid flex-1 gap-5 py-9 md:grid-cols-2 xl:grid-cols-4">
+      <article class="card-shine glass group flex min-h-[300px] flex-col rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-300/20">
+        <div class="flex items-center justify-between gap-4">
+          <span class="rounded-full border border-cyan-300/15 bg-cyan-300/5 px-3 py-1 text-xs font-bold text-cyan-300">照片工具</span>
+          <span class="text-xs font-semibold text-zinc-600">01</span>
+        </div>
+        <div class="mt-8">
+          <h2 class="text-2xl font-black text-white">Photo Sorter</h2>
+          <p class="mt-4 leading-7 text-zinc-400">使用數字鍵快速分類照片，將圖片整理到指定資料夾。</p>
+        </div>
+        <div class="mt-auto flex flex-wrap gap-3 pt-8">
+          <a href="https://github.com/yaotong110329/photo-sorter/releases" target="_blank" rel="noopener noreferrer" class="rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-zinc-950 transition hover:bg-cyan-200">下載</a>
+          <a href="https://github.com/yaotong110329/photo-sorter" target="_blank" rel="noopener noreferrer" class="rounded-xl border border-white/10 px-4 py-2.5 text-sm font-bold text-zinc-300 transition hover:border-white/20 hover:text-white">原始碼</a>
+        </div>
+      </article>
 
-        <div class="buttons">
-          <a class="button" href="https://github.com/yaotong110329/photo-sorter/releases" target="_blank">
-            下載
-          </a>
-          <a class="button secondary" href="https://github.com/yaotong110329/photo-sorter" target="_blank">
-            GitHub
+      <article class="card-shine glass group flex min-h-[300px] flex-col rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:border-violet-300/20">
+        <div class="flex items-center justify-between gap-4">
+          <span class="rounded-full border border-violet-300/15 bg-violet-300/5 px-3 py-1 text-xs font-bold text-violet-300">學習工具</span>
+          <span class="text-xs font-semibold text-zinc-600">02</span>
+        </div>
+        <div class="mt-8">
+          <h2 class="text-2xl font-black text-white">台北 e 大輔助程式</h2>
+          <p class="mt-4 leading-7 text-zinc-400">集中處理台北 e 大的課程操作與學習進度。</p>
+        </div>
+        <div class="mt-auto flex flex-wrap gap-3 pt-8">
+          <a href="https://github.com/yaotong110329/taipei-elearn-assistant/releases" target="_blank" rel="noopener noreferrer" class="rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-zinc-950 transition hover:bg-violet-200">下載</a>
+          <a href="https://github.com/yaotong110329/taipei-elearn-assistant" target="_blank" rel="noopener noreferrer" class="rounded-xl border border-white/10 px-4 py-2.5 text-sm font-bold text-zinc-300 transition hover:border-white/20 hover:text-white">原始碼</a>
+        </div>
+      </article>
+
+      <article class="card-shine glass group flex min-h-[300px] flex-col rounded-3xl p-6 transition duration-300 hover:-translate-y-1 hover:border-emerald-300/20">
+        <div class="flex items-center justify-between gap-4">
+          <span class="rounded-full border border-emerald-300/15 bg-emerald-300/5 px-3 py-1 text-xs font-bold text-emerald-300">學習工具</span>
+          <span class="text-xs font-semibold text-zinc-600">03</span>
+        </div>
+        <div class="mt-8">
+          <h2 class="text-2xl font-black text-white">e 等公務員輔助程式</h2>
+          <p class="mt-4 leading-7 text-zinc-400">提供更集中、清楚的課程操作與學習流程。</p>
+        </div>
+        <div class="mt-auto flex flex-wrap gap-3 pt-8">
+          <a href="https://github.com/yaotong110329/e-learning-course-assistant/releases" target="_blank" rel="noopener noreferrer" class="rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-zinc-950 transition hover:bg-emerald-200">下載</a>
+          <a href="https://github.com/yaotong110329/e-learning-course-assistant" target="_blank" rel="noopener noreferrer" class="rounded-xl border border-white/10 px-4 py-2.5 text-sm font-bold text-zinc-300 transition hover:border-white/20 hover:text-white">原始碼</a>
+        </div>
+      </article>
+
+      <article class="card-shine group flex min-h-[300px] flex-col rounded-3xl border border-cyan-300/15 bg-gradient-to-br from-cyan-300/15 via-zinc-900/75 to-violet-400/10 p-6 shadow-glow backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-300/30">
+        <div class="flex items-center justify-between gap-4">
+          <span class="rounded-full border border-cyan-200/20 bg-cyan-200/10 px-3 py-1 text-xs font-bold text-cyan-200">程式碼書籤</span>
+          <span class="text-xs font-semibold text-zinc-500">04</span>
+        </div>
+        <div class="mt-8">
+          <h2 class="text-2xl font-black text-white">Console 程式碼</h2>
+          <p class="mt-4 leading-7 text-zinc-300">常用 Console 程式碼、瀏覽器書籤碼與快速複製工具。</p>
+        </div>
+        <div class="mt-auto pt-8">
+          <a href="console.html" class="inline-flex items-center gap-2 rounded-xl bg-cyan-300 px-4 py-2.5 text-sm font-black text-zinc-950 transition hover:bg-cyan-200">
+            進入程式碼區
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M7 17 17 7M8 7h9v9" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </a>
         </div>
-      </section>
+      </article>
+    </section>
 
-       <section class="card">
-        <span class="tag">專案下載</span>
-        <h2>Taipei-Elearn-Assistant</h2>
-        <p>
-          台北e大輔助程式。
-        </p>
-
-        <div class="buttons">
-          <a class="button" href="https://github.com/yaotong110329/taipei-elearn-assistant/releases" target="_blank">
-            下載
-          </a>
-          <a class="button secondary" href="https://github.com/yaotong110329/taipei-elearn-assistant" target="_blank">
-            GitHub
-          </a>
-        </div>
-      </section>
-
-      <section class="card">
-      
-      <section class="card">
-        <span class="tag">專案下載</span>
-        <h2>E-Learning Course Assistant</h2>
-        <p>
-          e等公務員輔助程式。
-        </p>
-
-        <div class="buttons">
-          <a class="button" href="https://github.com/yaotong110329/e-learning-course-assistant/releases" target="_blank">
-            下載
-          </a>
-          <a class="button secondary" href="https://github.com/yaotong110329/e-learning-course-assistant" target="_blank">
-            GitHub
-          </a>
-        </div>
-      </section>
-
-      <section class="card">
-        <span class="tag">程式碼書籤</span>
-        <h2>Console 程式碼書籤</h2>
-        <p>
-          放常用的 Console 程式碼、瀏覽器書籤碼與快速複製工具。
-        </p>
-
-        <div class="buttons">
-          <a class="button" href="console.html">
-            進入程式碼書籤
-          </a>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      © 酷莫工具站
+    <footer class="flex flex-col gap-3 border-t border-white/5 pt-6 text-sm text-zinc-600 sm:flex-row sm:items-center sm:justify-between">
+      <p>© <span id="year"></span> 酷莫家</p>
+      <p>工具與專案集中頁</p>
     </footer>
-  </div>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
